@@ -32,24 +32,25 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->renderable(function (Throwable $e) {
+//            dd($e);
             switch ($e) {
                 case $e instanceof AuthenticationException:
-                    return Controller::getJsonResponse('Unauthenticated', [], false, 401);
+                    return Controller::getJsonResponse('Unauthenticated', null, false, 401);
                 case $e instanceof UnauthorizedException
                     || $e instanceof AccessDeniedHttpException
                     || $e instanceof \Spatie\Permission\Exceptions\UnauthorizedException:
                     return Controller::getJsonResponse('Unauthorized', null, false, 403);
                 case $e instanceof RecordsNotFoundException:
-                    return Controller::getJsonResponse('Requested resource not found', [], false, 404);
+                    return Controller::getJsonResponse('Requested resource not found', null, false, 404);
                 case $e instanceof RouteNotFoundException
                     || $e instanceof NotFoundHttpException:
-                    return Controller::getJsonResponse('Requested route not found', [], false, 404);
+                    return Controller::getJsonResponse('Requested resource was not found', null, false, 404);
                 /* Validations Exceptions */
                 case $e instanceof ValidationException:
                     return Controller::getJsonResponse('Invalid data', $e->errors(), false, 422);
 //                    /* Other Exceptions */
                 default:
-                    return Controller::getJsonResponse('Internal Serve error', $e->getMessage(), false, 500);
+                    return Controller::getJsonResponse('Internal Serve error', null, false, 500, $e);
 
 
             }

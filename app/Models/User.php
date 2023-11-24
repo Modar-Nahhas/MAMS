@@ -16,6 +16,7 @@ class User extends ApiUser
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     protected $guard_name = 'api';
+
     /**
      * The attributes that are mass assignable.
      *
