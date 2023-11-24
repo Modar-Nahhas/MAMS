@@ -1,6 +1,6 @@
 <?php
 
-namespace trait;
+namespace App\Traits;
 
 use Illuminate\Database\Schema\Blueprint;
 

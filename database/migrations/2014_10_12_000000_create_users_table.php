@@ -1,11 +1,12 @@
 <?php
 
+use App\Traits\CUTimestampsTrait;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    use \trait\CUTimestampsTrait;
+    use CUTimestampsTrait;
 
     /**
      * Run the migrations.
