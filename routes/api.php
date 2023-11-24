@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +16,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+
+Route::apiResource('articles', ArticleController::class)->only([
+    'index', 'show'
+]);
+Route::apiResource('articles.comments', CommentController::class)->only([
+    'index', 'show'
+]);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('logout', [AuthController::class, 'logout']);
+
+    Route::get('user/articles', [ArticleController::class, 'index']);
+    Route::get('user/articles/{id}', [ArticleController::class, 'show']);
+    Route::apiResource('articles', ArticleController::class)->only([
+        'store', 'update', 'destroy'
+    ]);
+    Route::apiResource('articles.comments', CommentController::class)->only([
+        'store', 'update', 'destroy'
+    ]);
+
 });

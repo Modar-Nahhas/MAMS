@@ -11,4 +11,5 @@ enum ArticleStatusEnum: string
     case Pending = 'pending';
     case Reviewed = 'reviewed';
     case Approved = 'approved';
+    case Updated = 'updated';
 }

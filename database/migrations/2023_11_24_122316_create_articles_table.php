@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->longText('content');
             $table->enum('status', \App\Enums\ArticleStatusEnum::values());
             $table->foreignIdFor(User::class,'user_id')->constrained();
-            $table->foreignIdFor(User::class, 'reviewed_by')->constrained('users');
-            $table->foreignIdFor(User::class, 'approved_by')->constrained('users');
+            $table->foreignIdFor(User::class, 'reviewed_by')->nullable()->constrained('users');
+            $table->foreignIdFor(User::class, 'approved_by')->nullable()->constrained('users');
             $this->addTimestamps($table);
         });
     }
