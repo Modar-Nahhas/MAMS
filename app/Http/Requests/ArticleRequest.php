@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Enums\ArticleStatusEnum;
+use Illuminate\Validation\Rule;
 use Mapi\Easyapi\Requests\BaseRequest;
 
 class ArticleRequest extends BaseRequest
@@ -28,6 +29,7 @@ class ArticleRequest extends BaseRequest
                 'with_reviewer' => ['sometimes', 'boolean'],
                 'with_approvedBy' => ['sometimes', 'boolean'],
                 'with_user' => ['sometimes', 'boolean'],
+                'where_status' => ['sometimes', Rule::in(ArticleStatusEnum::values())],
             ]);
         } elseif ($this->isMethod('post')) {
             return array_merge($this->postRules, [

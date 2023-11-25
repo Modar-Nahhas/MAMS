@@ -88,7 +88,7 @@ class ArticleController extends Controller
 
     public function reviewArticle($id): JsonResponse
     {
-        $this->authorize('review');
+        $this->authorize('review',Article::class);
         /** @var Article $article */
         $article = Article::query()->findOrFail($id);
         $article->review();
@@ -97,7 +97,7 @@ class ArticleController extends Controller
 
     public function approveArticle($id): JsonResponse
     {
-        $this->authorize('approve');
+        $this->authorize('approve',Article::class);
         /** @var Article $article */
         $article = Article::query()->findOrFail($id);
         $article->approve();
