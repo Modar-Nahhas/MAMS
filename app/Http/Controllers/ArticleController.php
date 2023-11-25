@@ -8,6 +8,17 @@ use Illuminate\Http\JsonResponse;
 
 class ArticleController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:' . \App\Enums\PermissionsEnum::ReviewArticle->value)->only([
+            'reviewArticle'
+        ]);
+        $this->middleware('permission:' . \App\Enums\PermissionsEnum::ApproveArticle->value)->only([
+            'approveArticle'
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -73,5 +84,23 @@ class ArticleController extends Controller
             $message = 'Failed';
         }
         return self::getJsonResponse($message, null, $res);
+    }
+
+    public function reviewArticle($id): JsonResponse
+    {
+        $this->authorize('review');
+        /** @var Article $article */
+        $article = Article::query()->findOrFail($id);
+        $article->review();
+        return self::getJsonResponse('Article has been reviewed', $article);
+    }
+
+    public function approveArticle($id): JsonResponse
+    {
+        $this->authorize('approve');
+        /** @var Article $article */
+        $article = Article::query()->findOrFail($id);
+        $article->approve();
+        return self::getJsonResponse('Article has been approved', $article);
     }
 }

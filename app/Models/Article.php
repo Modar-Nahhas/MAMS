@@ -40,6 +40,10 @@ class Article extends ApiModel
         'approved_by'
     ];
 
+    protected $allowedColumnsToSearch = [
+        'title', 'content'
+    ];
+
     protected $allowedFilters = [
         '*'
     ];
@@ -87,5 +91,17 @@ class Article extends ApiModel
             DB::rollBack();
             throw $e;
         }
+    }
+
+    public function review(): void
+    {
+        $this->status = ArticleStatusEnum::Reviewed->value;
+        $this->save();
+    }
+
+    public function approve(): void
+    {
+        $this->status = ArticleStatusEnum::Approved->value;
+        $this->save();
     }
 }

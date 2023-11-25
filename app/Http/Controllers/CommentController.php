@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Article;
-use App\Models\Comment;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -26,6 +24,7 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request, $articleId)
     {
+        $this->authorize('create');
         /** @var Article $article */
         $article = Article::query()->findOrFail($articleId);
         $data = $request->validated();
@@ -33,29 +32,5 @@ class CommentController extends Controller
         $comment = $article->comments()->create($data);
         return self::getJsonResponse('Success',$comment);
 
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Comment $comment)
-    {
-        //
     }
 }

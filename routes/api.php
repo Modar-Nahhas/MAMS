@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,7 +36,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         'store', 'update', 'destroy'
     ]);
     Route::apiResource('articles.comments', CommentController::class)->only([
-        'store', 'update', 'destroy'
+        'store'
     ]);
+
+    Route::get('articles/{id}/review', [ArticleController::class, 'reviewArticle']);
+    Route::get('articles/{id}/approve', [ArticleController::class, 'approveArticle']);
 
 });

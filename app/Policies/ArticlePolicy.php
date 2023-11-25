@@ -15,7 +15,7 @@ class ArticlePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo(PermissionsEnum::ViewArticle->value);
+        return $user != null && $user->hasPermissionTo(PermissionsEnum::ViewArticle->value);
     }
 
     /**
@@ -23,7 +23,7 @@ class ArticlePolicy
      */
     public function view(User $user, Article $article): bool
     {
-        return $user->hasPermissionTo(PermissionsEnum::ViewArticle->value);
+        return $user != null && $user->hasPermissionTo(PermissionsEnum::ViewArticle->value);
     }
 
     /**
@@ -31,7 +31,7 @@ class ArticlePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo(PermissionsEnum::StoreArticle->value);
+        return $user != null && $user->hasPermissionTo(PermissionsEnum::StoreArticle->value);
     }
 
     /**
@@ -39,7 +39,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article): bool
     {
-        return $user->hasPermissionTo(PermissionsEnum::UpdateArticle->value) && $user->id == $article->user_id;
+        return $user != null && $user->hasPermissionTo(PermissionsEnum::UpdateArticle->value) && $user->id == $article->user_id;
     }
 
     /**
@@ -47,7 +47,17 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article): bool
     {
-        return $user->hasRole(RolesEnum::Admin->value) || ($user->hasPermissionTo(PermissionsEnum::UpdateArticle->value) && $user->id == $article->user_id);
+        return $user != null && $user->hasRole(RolesEnum::Admin->value) || ($user->hasPermissionTo(PermissionsEnum::UpdateArticle->value) && $user->id == $article->user_id);
+    }
+
+    public function review(User $user): bool
+    {
+        return $user != null && $user->hasPermissionTo(PermissionsEnum::ReviewArticle->value);
+    }
+
+    public function approve(User $user): bool
+    {
+        return $user != null && $user->hasPermissionTo(PermissionsEnum::ReviewArticle->value);
     }
 
 }
