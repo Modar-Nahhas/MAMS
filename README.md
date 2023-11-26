@@ -5,7 +5,7 @@ Mini article management system
 * You should create the database first
 * Copy the .env.example to a .env file and put it in the main path of the project.
 * Change the database configuration based on your local database.
-* Set the email configurations (You can use mail trap account).
+* Set the email configurations, or the mails will be written to laravel log.
 * Run the following command:
 <pre>
 composer install
@@ -16,6 +16,14 @@ php artisan serve
 <pre>
 Email: admin@mams.com
 Password: 12345678
+</pre>
+* To handle the jobs responsible for sending emails, run the following command:
+<pre>
+php artisan queue:work -v --queue=email_notification
+</pre>
+And to retry failed jobs, run the following command:
+<pre>
+php artisan queue:retry --queue=email_notification
 </pre>
 
 # Notes

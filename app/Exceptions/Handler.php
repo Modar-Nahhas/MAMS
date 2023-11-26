@@ -32,7 +32,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->renderable(function (Throwable $e) {
-//            dd($e);
+            dd($e);
             switch ($e) {
                 case $e instanceof AuthenticationException:
                     return Controller::getJsonResponse('Unauthenticated', null, false, 401);
