@@ -53,6 +53,7 @@ the business related to determine the popular articles.
 Based on the business used to tell the popular articles, lets say the
 article that has the most number of likes is the most popular, I would 
 invalidate the cache whenever a user call the like article API.
+5. You can find the postman collection in a folder "Postman Collection" in project main path.
 
 # Run the tests
 I have created test cases for the main functionalities related to articles.
